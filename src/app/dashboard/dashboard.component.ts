@@ -10,7 +10,7 @@ import { SnackbarService } from '../services/snackbar/snackbar.service';
 })
 export class DashboardComponent implements AfterViewInit, OnInit {
   responseMessage: any;
-  data: any;
+  data: any = '';
 
   ngAfterViewInit() {}
 

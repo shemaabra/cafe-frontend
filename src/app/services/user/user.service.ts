@@ -30,8 +30,6 @@ export class UserService {
     return this._http.get(this.url + '/user/checkToken');
   }
   changePassword(data: any) {
-    return this._http.post(this.url + '/user/forgotPassword', data, {
-      headers: new HttpHeaders().set('Content-TYpe', 'applications/json'),
-    });
+    return this._http.post(this.url + '/user/changePassword', data);
   }
 }
