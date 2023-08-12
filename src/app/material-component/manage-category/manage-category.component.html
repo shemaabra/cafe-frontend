@@ -17,6 +17,7 @@
   </mat-form-field>
 </mat-card>
 <hr>
+
 <div class="responsive_table">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
@@ -31,7 +32,8 @@
         </button>
       </td>
     </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
-    <tr mat-row *matRowDef="let row;column:displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+    <tr mat-row *matRowDef="let rows; columns:displayedColumns"></tr>
   </table>
 </div>
+

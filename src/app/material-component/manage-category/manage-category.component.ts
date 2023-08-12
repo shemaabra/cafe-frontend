@@ -23,12 +23,14 @@ export class ManageCategoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.tableData();
   }
 
   tableData() {
     this._categoryService.getCategory().subscribe(
       (response: any) => {
         this.dataSource = new MatTableDataSource(response);
+        console.log(response);
       },
       (error) => {
         if (error.error?.message) {
