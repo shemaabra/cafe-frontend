@@ -30,7 +30,7 @@ export class CategoryComponent implements OnInit {
     this.categoryForm = this.formBuilder.group({
       name: [null, [Validators.required]],
     });
-    if (this.dialogAction === 'Edit') {
+    if (this.dialogData.action === 'Edit') {
       this.dialogAction = 'Edit';
       this.action = 'Update';
       this.categoryForm.patchValue(this.dialogData.data);

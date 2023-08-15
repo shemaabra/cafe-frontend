@@ -26,3 +26,15 @@
     </div>
   </form>
 </mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    (click)="handleSubmit()"
+    [disabled]="!(categoryForm.valid && categoryForm.dirty)"
+  >
+   {{action}}
+  </button>
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>
