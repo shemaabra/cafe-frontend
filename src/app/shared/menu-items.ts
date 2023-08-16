@@ -22,7 +22,7 @@ const MENUITEMS = [
   },
   {
     state: 'product',
-    name: 'Manage Category',
+    name: 'Manage Product',
     icon: 'inventory_2',
     role: 'admin',
   },

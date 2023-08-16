@@ -4,6 +4,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product/product.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { GlobalConstants } from 'src/app/shared/global-constant';
 
 @Component({
   selector: 'app-manage-product',
@@ -36,11 +37,30 @@ export class ManageProductComponent implements OnInit {
     this._productService.getProduct().subscribe(
       (response: any) => {
         this.dataSource = new MatTableDataSource(response);
-        console.log(this.dataSource);
       },
       (error: any) => {
         console.log(error);
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
       }
     );
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  handleAddAction() {}
+
+  handleEditAction(values: any) {}
+  handleDeleteAction(values: any) {}
+  onChange(status: any, id: any) {}
 }
