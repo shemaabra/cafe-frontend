@@ -44,11 +44,91 @@ export class ProductComponent implements OnInit {
       this.action = 'Update';
       this.productForm.patchValue(this.dialogData.data);
     }
+    this.getCategories();
   }
 
-  getCategories(){
-    this._categoryService.getCategory().subscribe((response)=>{
-      this.categories = response;
-    });
+  getCategories() {
+    this._categoryService.getCategory().subscribe(
+      (response: any) => {
+        this.categories = response;
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
+  }
+
+  handleSubmit() {
+    if (this.dialogAction === 'Edit') {
+      this.edit();
+    } else {
+      this.add();
+    }
+  }
+
+  add() {
+    var formData = this.productForm.value;
+    var data = {
+      name: formData.name,
+      categoryId: formData.categoryId,
+      price: formData.price,
+      description: formData.description,
+    };
+    this._productService.addProduct(data).subscribe(
+      (response: any) => {
+        this.dialogRef.close();
+        this.onAddProduct.emit();
+        this.responseMessage = response.message;
+        this._snackbarService.openSnackBar(this.responseMessage, 'success');
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
+  }
+  edit() {
+    var formData = this.productForm.value;
+    var data = {
+      id: this.dialogData.data.id,
+      name: formData.name,
+      categoryId: formData.categoryId,
+      price: formData.price,
+      description: formData.description,
+    };
+    this._productService.updateProduct(data).subscribe(
+      (response: any) => {
+        this.dialogRef.close();
+        this.onEditProduct.emit();
+        this.responseMessage = response.message;
+        this._snackbarService.openSnackBar(this.responseMessage, 'success');
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
   }
 }
