@@ -115,7 +115,6 @@ export class ManageProductComponent implements OnInit {
         this._snackbarService.openSnackBar(this.responseMessage, 'success');
       },
       (error: any) => {
-        console.log(error);
         if (error.error?.message) {
           this.responseMessage = error.error?.message;
         } else {
@@ -128,5 +127,27 @@ export class ManageProductComponent implements OnInit {
       }
     );
   }
-  onChange(status: any, id: any) {}
+  onChange(status: any, id: any) {
+    var data = {
+      status: status.toString(),
+      id: id,
+    };
+    this._productService.updateProductStatus(data).subscribe(
+      (response: any) => {
+        this.responseMessage = response?.message;
+        this._snackbarService.openSnackBar(this.responseMessage, 'success');
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
+  }
 }
