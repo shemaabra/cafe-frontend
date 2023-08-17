@@ -69,9 +69,26 @@ export class ManageProductComponent implements OnInit {
     this._router.events.subscribe(()=>{
       dialogRef.close();
     });
+    const sub = dialogRef.componentInstance.onAddProduct.subscribe((response)=>{
+      this.tableData();
+    });
   }
 
-  handleEditAction(values: any) {}
+  handleEditAction(values: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      action: 'Edit',
+      data:values
+    };
+    dialogConfig.width = '850px';
+    const dialogRef = this._dialog.open(ProductComponent, dialogConfig);
+    this._router.events.subscribe(()=>{
+      dialogRef.close();
+    });
+    const sub = dialogRef.componentInstance.onEditProduct.subscribe((response)=>{
+      this.tableData();
+    });
+  }
   handleDeleteAction(values: any) {}
   onChange(status: any, id: any) {}
 }
