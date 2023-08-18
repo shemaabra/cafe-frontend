@@ -12,12 +12,12 @@ export class ProductService {
   constructor(private _http: HttpClient) {}
 
   addProduct(data: any): Observable<any> {
-    return this._http.post(this.url + '/product/add/', data, {
+    return this._http.post(`${this.url}/product/add/`, data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
   updateProduct(data: any): Observable<any> {
-    return this._http.patch(this.url + '/product/update/', data, {
+    return this._http.patch(`${this.url}/product/update/`, data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
@@ -25,13 +25,15 @@ export class ProductService {
     return this._http.get(this.url + '/product/get/');
   }
   updateProductStatus(data: any): Observable<any> {
-    return this._http.patch(this.url + '/product/updateStatus/', data, {
+    return this._http.patch(`${this.url}/product/updateStatus/`, data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
-  deleteProduct(id: any) {
+  deleteProduct(id: string) {
     return this._http.delete(`${this.url}/product/delete/${id}`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
+
+  getProductByCategoryId(id: any){}
 }
