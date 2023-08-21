@@ -22,18 +22,28 @@ export class ProductService {
     });
   }
   getProduct(): Observable<any> {
-    return this._http.get(this.url + '/product/get/');
+    return this._http.get(`${this.url}/product/get/`);
   }
   updateProductStatus(data: any): Observable<any> {
     return this._http.patch(`${this.url}/product/updateStatus/`, data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
-  deleteProduct(id: string) {
+  deleteProduct(id: any): Observable<any> {
     return this._http.delete(`${this.url}/product/delete/${id}`, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
 
-  getProductByCategoryId(id: any){}
+  getProductsByCategoryId(id: any): Observable<any> {
+    return this._http.get(`${this.url}/product/getByCategory/${id}`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+    });
+  }
+
+  getById(id: any): Observable<any> {
+    return this._http.get(`${this.url}/product/getById/${id}`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+    });
+  }
 }
