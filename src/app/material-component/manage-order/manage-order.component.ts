@@ -86,11 +86,42 @@ export class ManageOrderComponent implements OnInit {
     this._productService.getProductsByCategoryId(value.id).subscribe(
       (response: any) => {
         this.products = response;
-        this.manageOrderForm.controls['price'].setValue();
-        this.manageOrderForm.controls['quantity'].setValue();
-        this.manageOrderForm.controls['total'].setValue();
+        this.manageOrderForm.controls['price'].setValue('');
+        this.manageOrderForm.controls['quantity'].setValue('');
+        this.manageOrderForm.controls['total'].setValue(0);
       },
-      (error: any) => {}
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
     );
   }
+
+  getProductDetails(value: any) {
+    this._productService.getById(value.id).subscribe(
+      (response: any) => {
+        this.price = response.price;
+        this.manageOrderForm.controls['price'].setValue(response.price);
+        this.manageOrderForm.controls['quantity'].setValue('1');
+        this.manageOrderForm.controls['total'].setValue(this.price*1);
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        }else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this.responseMessage.openSnackBar(this.responseMessage, GlobalConstants.error)
+      }
+    );
+  }
+
+  setQuantity(){}
 }
