@@ -22,4 +22,14 @@ export class BillService {
       responseType: 'blob',
     });
   }
+
+  getBills(): Observable<any> {
+    return this._http.get(`${this.url}/bill/getBills`);
+  }
+
+  deleteBill(id: any): Observable<any> {
+    return this._http.delete(`${this.url}/bill/delete/${id}`, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+    });
+  }
 }
