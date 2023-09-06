@@ -4,12 +4,12 @@
     width: auto;
     margin-bottom: 10PX;
   }
-  
+
   .title-center {
       flex: 1 1 auto;
-      text-align: center;
+      text-align: left;
     }
-  
+
     mat-form-field{
         padding: 5px;
     }
@@ -17,11 +17,11 @@
     .float-right{
         float: right;
     }
-    
+
     mat-card{
         padding: 20px;
     }
-    
+
     table {
         width: 100%;
       }
@@ -32,16 +32,16 @@
         border-collapse: collapse;
         width: 100%;
       }
-      
+
       #customers td, #customers th {
         border: 1px solid #ddd;
         padding: 8px;
       }
-      
+
       #customers tr:nth-child(even){background-color: #f2f2f2;}
-      
+
       #customers tr:hover {background-color: #ddd;}
-      
+
       #customers th {
         padding-top: 12px;
         padding-bottom: 12px;

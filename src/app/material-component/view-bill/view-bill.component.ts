@@ -6,6 +6,7 @@ import { BillService } from 'src/app/services/bill/bill.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constant';
 import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bill-products.component';
+import { ConfirmationComponent } from '../dialog/confirmation/confirmation/confirmation.component';
 
 @Component({
   selector: 'app-view-bill',
@@ -64,12 +65,48 @@ export class ViewBillComponent implements OnInit {
       data: values,
     };
     dialogConfig.width = '100%';
-    const dialogRef = this._dialog.open(ViewBillProductsComponent, dialogConfig);
+    const dialogRef = this._dialog.open(
+      ViewBillProductsComponent,
+      dialogConfig
+    );
     this._router.events.subscribe(() => {
       dialogRef.close();
     });
   }
 
-  handleDownloadReportAction(values: any){}
-  handleDeleteAction(id: any) {}
+  handleDownloadReportAction(values: any) {}
+  handleDeleteAction(values: any) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      message: 'delete ' + values.name + ' bill',
+    };
+    const dialogRef = this._dialog.open(ConfirmationComponent, dialogConfig);
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe(
+      (response) => {
+        this.deleteProduct(values.id);
+        dialogRef.close();
+      }
+    );
+  }
+
+  deleteProduct(id: any) {
+    this._billService.deleteBill(id).subscribe(
+      (response: any) => {
+        this.tableData();
+        this.responseMessage = response?.message;
+        this._snackbarService.openSnackBar(this.responseMessage, 'success');
+      },
+      (error: any) => {
+        if (error.error?.message) {
+          this.responseMessage = error.error?.message;
+        } else {
+          this.responseMessage = GlobalConstants.genericError;
+        }
+        this._snackbarService.openSnackBar(
+          this.responseMessage,
+          GlobalConstants.error
+        );
+      }
+    );
+  }
 }
