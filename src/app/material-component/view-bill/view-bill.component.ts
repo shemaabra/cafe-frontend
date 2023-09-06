@@ -7,6 +7,7 @@ import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constant';
 import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bill-products.component';
 import { ConfirmationComponent } from '../dialog/confirmation/confirmation/confirmation.component';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-view-bill',
@@ -74,7 +75,23 @@ export class ViewBillComponent implements OnInit {
     });
   }
 
-  handleDownloadReportAction(values: any) {}
+  handleDownloadReportAction(values: any) {
+    var data = {
+      name: values.name,
+      email: values.email,
+      uuid: values.uuid,
+      contactNumber: values.contactNumber,
+      paymentMethod: values.paymentMethod,
+      totalAmount: values.total,
+      productDetails: values.productDetails,
+    };
+    this._billService.getPDF(data).subscribe(
+      (response: any) => {
+        saveAs(response, values.uuid+'.pdf');
+      },
+      (error: any) => {}
+    );
+  }
   handleDeleteAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
