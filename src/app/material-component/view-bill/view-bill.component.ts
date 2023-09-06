@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { BillService } from 'src/app/services/bill/bill.service';
 import { SnackbarService } from 'src/app/services/snackbar/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constant';
+import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bill-products.component';
 
 @Component({
   selector: 'app-view-bill',
@@ -57,11 +58,18 @@ export class ViewBillComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  handleViewAction(values: any){
+  handleViewAction(values: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      data: values
-    }
+      data: values,
+    };
     dialogConfig.width = '100%';
+    const dialogRef = this._dialog.open(ViewBillProductsComponent, dialogConfig);
+    this._router.events.subscribe(() => {
+      dialogRef.close();
+    });
   }
+
+  handleDownloadReportAction(values: any){}
+  handleDeleteAction(id: any) {}
 }
