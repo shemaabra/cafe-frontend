@@ -37,7 +37,7 @@ export class UserService {
     return this._http.get(this.url + '/user/get');
   }
   updatUser(data: any){
-    return this._http.patch(this.url + 'user/update/', data, {
+    return this._http.patch(this.url + 'user/update', data, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     });
   }
