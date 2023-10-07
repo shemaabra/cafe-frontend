@@ -32,4 +32,14 @@ export class UserService {
   changePassword(data: any) {
     return this._http.post(this.url + '/user/changePassword', data);
   }
+
+  getUsers(){
+    return this._http.get(this.url + '/user/get');
+  }
+  updatUser(data: any){
+    return this._http.patch(this.url + 'user/update/', data, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+    });
+  }
+
 }
